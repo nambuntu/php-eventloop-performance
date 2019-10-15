@@ -144,6 +144,10 @@ Throughput only hit a certain number: 3475 hits/second and then starts to fall w
 
 For more details please have a look at the result folder.
 * ReactPHP Performance summary
+![ReactPHP Performance summary](https://namnvhue.github.io/php-eventloop-performance/assets/php-eventloop-performance.png)
 * ReactPHP Performance overtime
+![ReactPHP Performance overtime](https://namnvhue.github.io/php-eventloop-performance/assets/php-eventloop-overtime.png)
 * ReactPHP Performance throughput
+![ReactPHP Performance throughput](https://namnvhue.github.io/php-eventloop-performance/assets/php-eventloop-throughput.png)
 * ReactPHP Performance response time
+![ReactPHP Performance response time](https://namnvhue.github.io/php-eventloop-performance/assets/php-eventloop-response-time.png)
