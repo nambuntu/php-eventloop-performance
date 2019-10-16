@@ -68,7 +68,7 @@ After running the test I could observe more than 50% of the requests are failed 
 This is still a big negative consider how the test is simple (just echo a static message, no other extension/connection).
 
 There are couple of other optimization I should spend more time into before having a better conclusion,
-issue such as https://github.com/reactphp/http/issues/311[https://github.com/reactphp/http/issues/311]
+issue such as [https://github.com/reactphp/http/issues/311](https://github.com/reactphp/http/issues/311)
 could really impact the test result.
 TODO: next step would be to update this test to a more complicated one in connection with MongoDB,
 I think I'm gonna use this library: [https://github.com/jmikola/react-mongodb](https://github.com/jmikola/react-mongodb)
