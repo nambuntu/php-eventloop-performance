@@ -36,20 +36,21 @@ $loop->run();
 * Concurrent users: 3000
 * Test script details:
 Ramp up 3000 threads in 20 seconds and loop for 20 times (enough loop for all 3000 threads to started and stayed alive) -> observer the result.
-```
-<ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Thread Group" enabled="true">
-  <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
-  <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
-    <boolProp name="LoopController.continue_forever">false</boolProp>
-    <intProp name="LoopController.loops">20</intProp>
-  </elementProp>
-  <stringProp name="ThreadGroup.num_threads">3000</stringProp>
-  <stringProp name="ThreadGroup.ramp_time">20</stringProp>
-  <boolProp name="ThreadGroup.scheduler">false</boolProp>
-  <stringProp name="ThreadGroup.duration"></stringProp>
-  <stringProp name="ThreadGroup.delay"></stringProp>
-</ThreadGroup>
-```
+
+<pre>
+&lt;ThreadGroup guiclass=&quot;ThreadGroupGui&quot; testclass=&quot;ThreadGroup&quot; testname=&quot;Thread Group&quot; enabled=&quot;true&quot;&gt;
+  &lt;stringProp name=&quot;ThreadGroup.on_sample_error&quot;&gt;continue&lt;/stringProp&gt;
+  &lt;elementProp name=&quot;ThreadGroup.main_controller&quot; elementType=&quot;LoopController&quot; guiclass=&quot;LoopControlPanel&quot; testclass=&quot;LoopController&quot; testname=&quot;Loop Controller&quot; enabled=&quot;true&quot;&gt;
+    &lt;boolProp name=&quot;LoopController.continue_forever&quot;&gt;false&lt;/boolProp&gt;
+    &lt;intProp name=&quot;LoopController.loops&quot;&gt;20&lt;/intProp&gt;
+  &lt;/elementProp&gt;
+  &lt;stringProp name=&quot;ThreadGroup.num_threads&quot;&gt;3000&lt;/stringProp&gt;
+  &lt;stringProp name=&quot;ThreadGroup.ramp_time&quot;&gt;20&lt;/stringProp&gt;
+  &lt;boolProp name=&quot;ThreadGroup.scheduler&quot;&gt;false&lt;/boolProp&gt;
+  &lt;stringProp name=&quot;ThreadGroup.duration&quot;&gt;&lt;/stringProp&gt;
+  &lt;stringProp name=&quot;ThreadGroup.delay&quot;&gt;&lt;/stringProp&gt;
+&lt;/ThreadGroup&gt;
+</pre>
 
 # How to run the test
 After cloning the repository, please run the following command in your terminal in order to run this test:
