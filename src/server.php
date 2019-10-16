@@ -10,12 +10,14 @@ use React\Socket\ConnectionInterface;
 require __DIR__ . '/../vendor/autoload.php';
 $loop = Factory::create();
 $server = new Server(isset($argv[1]) ? $argv[1] : 0, $loop, array(
+    'backlog' => 128,
     'tls' => array(
         'local_cert' => isset($argv[2]) ? $argv[2] : (__DIR__ . '/localhost.pem')
     )
 ));
+
 $server->on('connection', function (ConnectionInterface $connection) {
-    $connection->once('data', function () use ($connection) {        
+    $connection->once('data', function () use ($connection) {
         $body = "<html><h1>Everyday is a beautiful day!</h1></html>\r\n";
         $connection->end("HTTP/1.1 200 OK\r\nContent-Length: " . strlen($body) . "\r\nConnection: close\r\n\r\n" . $body);
     });

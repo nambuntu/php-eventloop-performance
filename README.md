@@ -14,6 +14,7 @@ use React\Socket\ConnectionInterface;
 require __DIR__ . '/../vendor/autoload.php';
 $loop = Factory::create();
 $server = new Server(isset($argv[1]) ? $argv[1] : 0, $loop, array(
+    'backlog' => 128,
     'tls' => array(
         'local_cert' => isset($argv[2]) ? $argv[2] : (__DIR__ . '/localhost.pem')
     )
@@ -32,23 +33,22 @@ $loop->run();
 ## Test specs
 * Computer: Dell `Latitude 5490`, `Intel Core i7-8650U CPU @ 1.90GHz Turbo 3.8Ghz` 4 cores 8 threads, 16GB RAM
 * PHP http web application, readonly, no database
-* Concurrent users: 5000
+* Concurrent users: 3000
 * Test script details:
-Ramp up 5000 threads in 60 seconds, run the test for 1.5 minutes or 2 minutes -> observer the result.
-```xml
+Ramp up 3000 threads in 20 seconds and loop for 20 times (enough loop for all 3000 threads to started and stayed alive) -> observer the result.
+```
 <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Thread Group" enabled="true">
-<stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
-<elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
-  <boolProp name="LoopController.continue_forever">false</boolProp>
-  <intProp name="LoopController.loops">-1</intProp>
-</elementProp>
-<stringProp name="ThreadGroup.num_threads">5000</stringProp>
-<stringProp name="ThreadGroup.ramp_time">60</stringProp>
-<boolProp name="ThreadGroup.scheduler">false</boolProp>
-<stringProp name="ThreadGroup.duration"></stringProp>
-<stringProp name="ThreadGroup.delay"></stringProp>
+  <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+  <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
+    <boolProp name="LoopController.continue_forever">false</boolProp>
+    <intProp name="LoopController.loops">20</intProp>
+  </elementProp>
+  <stringProp name="ThreadGroup.num_threads">3000</stringProp>
+  <stringProp name="ThreadGroup.ramp_time">20</stringProp>
+  <boolProp name="ThreadGroup.scheduler">false</boolProp>
+  <stringProp name="ThreadGroup.duration"></stringProp>
+  <stringProp name="ThreadGroup.delay"></stringProp>
 </ThreadGroup>
-
 ```
 
 # How to run the test
@@ -63,9 +63,14 @@ jmeter -n -t stress.jmx -l ./result/result.csv -e -o ./result
 ```
 
 # Result Analyse and Conclusion
-After running the test I could observe more than 80% of the requests are failed due to `Connect to 127.0.0.1:8080 [\/127.0.0.1] failed: Connection refused: connect`
-This is a big negative consider how the test is simple (just echo a static message, no other extension/connection).
-Throughput only hit a certain number: 3475 hits/second and then starts to fall with the exact shape like accelerating, so this means the server reached an overwhelming threshold and stopped functioning properly.
+After running the test I could observe more than 50% of the requests are failed due to `Connect to 127.0.0.1:8080 [\/127.0.0.1] failed: Connection refused: connect`
+This is still a big negative consider how the test is simple (just echo a static message, no other extension/connection).
+
+There are couple of other optimization I should spend more time into before having a better conclusion,
+issue such as https://github.com/reactphp/http/issues/311[https://github.com/reactphp/http/issues/311]
+could really impact the test result.
+TODO: next step would be to update this test to a more complicated one in connection with MongoDB,
+I think I'm gonna use this library: [https://github.com/jmikola/react-mongodb](https://github.com/jmikola/react-mongodb)
 
 For more details please have a look at the [result folder](https://namnvhue.github.io/php-eventloop-performance/result/index.html)
 * ReactPHP Performance summary
